@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { SortField, SortOrder } from "@/lib/db/types";
-import { ProductGridSkeleton } from "@/src/components/ProductSkeleton";
 import { ProductPage } from "./InfiniteProducts.server";
 import { ProductSort } from "@/src/components/ProductSort.client";
 
@@ -22,9 +21,7 @@ export default async function InfiniteProductsPage({
         <ProductSort sortField={sortField} sortOrder={sortOrder} />
       </div>
 
-      <Suspense key="products-1" fallback={<ProductGridSkeleton />}>
-        <ProductPage page={1} sortField={sortField} sortOrder={sortOrder} />
-      </Suspense>
+      <ProductPage page={1} sortField={sortField} sortOrder={sortOrder} />
       <Suspense key={`${sortField}-${sortOrder}-${page}`}>
         {pagesToShow.map((pageIndex) => (
           <ProductPage
