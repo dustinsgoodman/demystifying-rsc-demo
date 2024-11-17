@@ -9,9 +9,10 @@ export default async function PaginatedProductsPage({
 }: {
   searchParams: { sort?: SortField; order?: SortOrder; page?: number };
 }) {
-  const sortField = (searchParams.sort || "name") as SortField;
-  const sortOrder = (searchParams.order || "asc") as SortOrder;
-  const page = Number(searchParams.page || 1);
+  const paginationParams = await searchParams;
+  const sortField = (paginationParams.sort || "name") as SortField;
+  const sortOrder = (paginationParams.order || "asc") as SortOrder;
+  const page = Number(paginationParams.page || 1);
 
   return (
     <div className="container mx-auto px-4 py-8">

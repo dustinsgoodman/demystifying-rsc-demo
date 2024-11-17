@@ -10,7 +10,8 @@ export default async function ProductPage({
 }: {
   params: { id: string };
 }) {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+  const product = await getProduct(id);
 
   if (!product) {
     notFound();
@@ -18,10 +19,10 @@ export default async function ProductPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ProductDetails productId={params.id} />
+      <ProductDetails productId={id} />
 
       <Suspense fallback={<RecommendedProductsSkeleton />}>
-        <RecommendedProducts productId={params.id} />
+        <RecommendedProducts productId={id} />
       </Suspense>
     </div>
   );

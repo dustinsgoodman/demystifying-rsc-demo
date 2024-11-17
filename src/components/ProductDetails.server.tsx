@@ -12,8 +12,10 @@ export async function ProductDetails({ productId }: { productId: string }) {
         <Image
           src={product.imageUrl}
           alt={product.name}
-          fill
+          fill={true}
           className="object-cover rounded-lg"
+          priority={true}
+          sizes="(max-width: 768px) 230px, (max-width: 1200px) 300px, 300px"
         />
       </div>
 
