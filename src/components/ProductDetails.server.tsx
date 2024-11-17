@@ -1,5 +1,6 @@
 import { getProduct } from "@/lib/db/products";
 import Image from "next/image";
+import { AddToCart } from "./AddToCart.client";
 
 export async function ProductDetails({ productId }: { productId: string }) {
   const product = await getProduct(productId);
@@ -24,6 +25,8 @@ export async function ProductDetails({ productId }: { productId: string }) {
         <p className="text-xl text-gray-600">{product.brand}</p>
         <p className="text-2xl font-semibold">${product.price}</p>
         <p className="text-gray-700">{product.description}</p>
+
+        <AddToCart product={product} />
       </div>
     </div>
   );

@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { CartProvider } from "@/src/context/cart";
+import { CartSummary } from "@/src/components/CartSummary.client";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -20,15 +23,27 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <CartProvider>
+          <div className="min-h-screen">
+            <header className="bg-white shadow-sm">
+              <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+                <Link href="/">
+                  <h1 className="text-xl font-bold">Demo Store</h1>
+                </Link>
+                <CartSummary />
+              </div>
+            </header>
+            <div className="min-h-screen">{children}</div>
+          </div>
+        </CartProvider>
       </body>
     </html>
   );
