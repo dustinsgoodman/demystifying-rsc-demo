@@ -2,7 +2,8 @@
 import { useTransition, useEffect, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { SortField, SortOrder } from "@/lib/db/types";
-import { useIntersection } from "@/src/hooks/useIntersection.client";
+import { useIntersection } from "@/src/hooks/useIntersection";
+import { ProductGridSkeleton } from "@/src/components/ProductSkeleton";
 
 export function LoadMore({
   hasMore,
@@ -53,7 +54,7 @@ export function LoadMore({
 
   return (
     <div ref={loadingRef} className="h-10">
-      {isPending && <div className="h-10 bg-gray-200 rounded-lg" />}
+      {isPending && <ProductGridSkeleton />}
     </div>
   );
 }
