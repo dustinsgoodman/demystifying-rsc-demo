@@ -1,3 +1,13 @@
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
+
+export type CartState = {
+  items: CartItem[];
+  total: number;
+};
+
 export type Product = {
   id: string;
   name: string;

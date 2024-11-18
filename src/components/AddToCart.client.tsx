@@ -2,9 +2,10 @@
 import { useState, useTransition } from "react";
 import { useCart } from "@/src/context/cart";
 import { Product } from "@/lib/db/types";
+import { addItemToCart, removeItemFromCart } from "@/lib/db/cart";
 
 export function AddToCart({ product }: { product: Product }) {
-  const { addItem } = useCart();
+  const { updateCart } = useCart();
   const [quantity, setQuantity] = useState<number>(1);
   const [added, setAdded] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -20,12 +21,20 @@ export function AddToCart({ product }: { product: Product }) {
     });
   };
 
-  const handleAddToCart = () => {
-    startTransition(() => {
-      addItem(product, quantity);
+  const handleAddToCart = async () => {
+    startTransition(async () => {
       setAdded(true);
       setQuantity(1);
+      const updatedCart = await addItemToCart({ product, quantity });
+      updateCart(updatedCart);
       setTimeout(() => setAdded(false), 1000);
+    });
+  };
+
+  const handleRemoveFromCart = async () => {
+    startTransition(async () => {
+      const updatedCart = await removeItemFromCart({ product, quantity });
+      updateCart(updatedCart);
     });
   };
 
@@ -56,6 +65,13 @@ export function AddToCart({ product }: { product: Product }) {
         className="text-lg bg-blue-500 text-white rounded-md px-4 py-1"
       >
         {added ? "Added to Cart!" : "Add to cart"}
+      </button>
+      <button
+        onClick={handleRemoveFromCart}
+        disabled={isPending}
+        className="text-lg bg-red-500 text-white rounded-md px-4 py-1"
+      >
+        Remove from cart
       </button>
     </div>
   );
