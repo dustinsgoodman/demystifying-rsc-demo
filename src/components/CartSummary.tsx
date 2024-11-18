@@ -1,10 +1,11 @@
-// "use client";
-// import { useCart } from "@/src/context/cart";
-import { CartState } from "@/lib/db/types";
+"use client";
+import { useCart } from "@/src/context/cart";
+// import { CartState } from "@/lib/db/types";
 
 export function CartSummary({ cart }: { cart: CartState }) {
-  // const { state } = useCart();
-  const itemCount = cart.items.reduce<number>(
+  const { state } = useCart();
+  const itemCount = state.items.reduce<number>(
+    // const itemCount = cart.items.reduce<number>(
     (acc, item) => acc + item.quantity,
     0
   );
