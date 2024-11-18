@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CartProvider } from "@/src/context/cart";
-import { CartSummary } from "@/src/components/CartSummary.client";
+import { CartSummary } from "@/src/components/CartSummary";
 import localFont from "next/font/local";
 import { getCartState } from "@/lib/db/cart";
 import "./globals.css";
@@ -41,7 +41,7 @@ export default async function RootLayout({
                 <Link href="/">
                   <h1 className="text-xl font-bold">Demo Store</h1>
                 </Link>
-                <CartSummary />
+                <CartSummary cart={cartState} />
               </div>
             </header>
             <div className="min-h-screen">{children}</div>

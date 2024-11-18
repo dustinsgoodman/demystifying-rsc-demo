@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { CartItem, CartState } from "@/lib/db/types";
 
 let cart: CartState = {
@@ -15,7 +16,6 @@ export async function addItemToCart(payload: CartItem) {
   const existingItem = getExistingCartItem(payload.product.id);
 
   if (existingItem) {
-    console.log("existingItem", existingItem);
     cart = {
       ...cart,
       items: cart.items.map((cartItem) =>
@@ -28,6 +28,9 @@ export async function addItemToCart(payload: CartItem) {
       ),
       total: cart.total + payload.product.price * payload.quantity,
     };
+
+    // will not retrigger suspense underneath
+    revalidatePath("/products", "layout");
     return cart;
   }
 
@@ -42,6 +45,7 @@ export async function addItemToCart(payload: CartItem) {
     ],
     total: cart.total + payload.product.price * payload.quantity,
   };
+  revalidatePath("/products", "layout");
   return cart;
 }
 
@@ -56,6 +60,7 @@ export async function removeItemFromCart(payload: CartItem) {
     items: cart.items.filter((i) => i.product.id !== payload.product.id),
     total: cart.total - existingItem?.product.price * existingItem.quantity,
   };
+  revalidatePath("/products", "layout");
   return cart;
 }
 
