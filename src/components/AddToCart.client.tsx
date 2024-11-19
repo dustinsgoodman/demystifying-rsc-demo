@@ -22,9 +22,9 @@ export function AddToCart({ product }: { product: Product }) {
   };
 
   const handleAddToCart = async () => {
+    setAdded(true);
+    setQuantity(1);
     startTransition(async () => {
-      setAdded(true);
-      setQuantity(1);
       const updatedCart = await addItemToCart({ product, quantity });
       updateCart(updatedCart);
       setTimeout(() => setAdded(false), 1000);
@@ -62,14 +62,14 @@ export function AddToCart({ product }: { product: Product }) {
       <button
         onClick={handleAddToCart}
         disabled={isPending}
-        className="text-lg bg-blue-500 text-white rounded-md px-4 py-1"
+        className="text-lg bg-blue-500 disabled:opacity-50 text-white rounded-md px-4 py-1"
       >
-        {added ? "Added to Cart!" : "Add to cart"}
+        {added || isPending ? "Added to Cart!" : "Add to cart"}
       </button>
       <button
         onClick={handleRemoveFromCart}
         disabled={isPending}
-        className="text-lg bg-red-500 text-white rounded-md px-4 py-1"
+        className="text-lg bg-red-500 disabled:opacity-50 text-white rounded-md px-4 py-1"
       >
         Remove from cart
       </button>
