@@ -2,7 +2,7 @@
 import { useCart } from "@/src/context/cart";
 // import { CartState } from "@/lib/db/types";
 
-export function CartSummary({ cart }: { cart: CartState }) {
+export function CartSummary(/*{ cart }: { cart: CartState } */) {
   const { state } = useCart();
   const itemCount = state.items.reduce<number>(
     // const itemCount = cart.items.reduce<number>(
@@ -16,7 +16,7 @@ export function CartSummary({ cart }: { cart: CartState }) {
       <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm">
         {itemCount}
       </span>
-      <span className="text-gray-600">${cart.total.toFixed(2)}</span>
+      <span className="text-gray-600">${state.total.toFixed(2)}</span>
     </div>
   );
 }
